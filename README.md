@@ -1,2 +1,8 @@
 # todolist
-分别使用react和原生JavaScript实现todolist
+分别使用react和原生JavaScript实现todolist，实现了点击enter设置新的item，
+在输入框中输入，会匹配之前输入的item并显示，点击item中的X会删除该项item
+#原生JavaScript版本
+原生JavaScript版本的案例直接在浏览器中打开test.html即可
+#react版本
+安装了node和python的情况下，在项目目录下执行npm install命令然后执行npm run build命令，
+在生成的build目录下打开index.html
