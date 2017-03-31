@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<style type="text/css" media="screen">
+		*{
+			padding:0;
+			margin:0;
+		}
+		body{
+			padding: 20px;
+		}
+		.input{
+			display: inline-block;
+			width:180px;
+		}
+		ul{
+			list-style: none;
+			width:180px;
+		}
+		ul li{
+			border:1px solid #999;
+			position:relative;
+		}
+		ul li span{
+			position: absolute;
+			right:2px;
+			color:red;
+		}
+	</style>
+</head>
+<body>
+	<input id="input" class="input" type="text"/>
+	<ul id="ul">
+		<!-- <li>aaa<span class="span">x</span></li> -->
+	</ul>
+	<script type="text/javascript">
+		Array.prototype.remove = function(val) {
+			var index = this.indexOf(val);
+			if (index > -1) {
+				this.splice(index, 1);
+			}
+		};
+		var text="";
+		var txtShow="";
+		var liarr = [];
+		//arrAll存放所有的输入
+		var arrAll = [];
+		var objAll = {};
+		//arrShow存放要显示的输入
+		var arrShow = [];
+		var input = document.getElementById("input");
+		var ul = document.getElementById("ul");
+		input.addEventListener('keypress',function(e){
+			if(e.keyCode==13){
+				text = input.value;
+				if(text!=""&&!objAll[text]){
+					arrAll.push(text);
+					objAll[text]=1;
+				}
+				input.value = text = "";
+				ul.innerHTML="";
+			}
+		});
+		input.addEventListener('input',function(e){
+			textShow=input.value;
+			ul.innerHTML="";
+			if(textShow!=""){
+				arrShow.length=0;
+				for(var i = 0;i<arrAll.length;i++){
+					if(arrAll[i].indexOf(textShow)>-1){
+						arrShow.push(arrAll[i]);
+					}
+				}
+				handleShow(arrShow);
+			}
+			
+		});
+		function handleShow(arr){
+			for(var j=0;j<arr.length;j++){
+				var txt = arr[j];
+				var li = document.createElement('li');
+				li.innerText = txt;
+				li.setAttribute('data-txt',txt);
+				var span = document.createElement('span');
+				span.className = "span";
+				span.innerText = 'X';
+				li.appendChild(span);
+				ul.appendChild(li);			
+			}
+		}
+		ul.addEventListener('click',function(e){
+			var target = e.target||e.srcElement;
+			if(target.tagName=="SPAN"){
+				var pnode = target.parentNode;
+				var nodetxt = pnode.getAttribute("data-txt");
+				arrAll.remove(nodetxt);
+				objAll[nodetxt]=0;
+				pnode.parentNode.removeChild(pnode);
+			}
+		});
+		
+	</script>		
+</body>
+</html>
